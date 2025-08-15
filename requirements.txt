@@ -1,0 +1,5 @@
+# This project is implemented in MATLAB, so no pip requirements are needed.
+# For reproducibility, note:
+# MATLAB R2023a or later
+# Optimization Toolbox
+# NASA POWER API access (optional)
