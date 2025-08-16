@@ -1,3 +1,13 @@
+# Fully Decarbonising the Off-Grid Al Jalamid Phosphate Complex 
+**MILP Formulation and Techno-Economics for PV–CSP–BESS–PEM Integration**
+
+This repository contains the models, data, and documentation supporting the MSc Business Analytics Individual Research Report (IRR) on optimising a hybrid renewable–hydrogen system for Ma’aden's off-grid Al Jalamid phosphate complex. The site uses diesel for electricity generation and uses heavy fuel oil HFO in the combustion chamber of the dryer. This project aims from partial to full decarbonization of site.
+
+---
+
+## 📜 Overview
+![Hybrid PV–CSP Field–TES–CSP Turbine–BESS–PEM System Flow](hybrid_pv_cspfield_tes_turbine_flow_sun_arrows.png)
+
 ## 📊 Key Features
 - **Deterministic and CVaR MILP** formulations implemented in MATLAB
 - Hourly resolution over single-year (2022) and 10-year NASA POWER irradiance datasets
@@ -53,52 +63,24 @@ Example model outputs (Excel):
 - Emissions (CO₂, CH₄, N₂O avoided)
 - Assumptions (all `unit` and `econ` parameters used)
 
-# Fully Decarbonising the Off-Grid Al Jalamid Phosphate Complex
-**MILP Formulation and Techno-Economics for PV–CSP–BESS–PEM Integration**
+### **📁 docs/**
+Project documentation:
+- Final MSc IRR PDF
+- Appendices with cost benchmarks, carbon pricing scenarios, and operational assumptions
 
-This repository contains the models, data, and documentation supporting the MSc Business Analytics Individual Research Report (IRR) on optimising a hybrid renewable–hydrogen system for Ma’aden's off-grid Al Jalamid phosphate complex.
-
-## 📜 Overview
-We develop a **two-pass lexicographic Mixed-Integer Linear Program (MILP)** to size and dispatch:
-- **Photovoltaic (PV)** field
-- **Concentrating Solar Power (CSP)** with molten-salt Thermal Energy Storage (TES)
-- **Battery Energy Storage System (BESS)**
-- **Proton-Exchange-Membrane (PEM) Electrolyser**
-
-The system replaces diesel-based electricity and Heavy Fuel Oil (HFO) process heat with renewable electricity and green hydrogen.
-
-## 📊 Key Features
-- **Deterministic and CVaR (risk-aware) MILP** formulations
-- Hourly resolution over 1-year and 10-year NASA POWER irradiance records
-- Explicit coupling of electrolyser hydrogen output to avoided HFO use and carbon credits
-- Sensitivity analysis for **CO₂ price** and **production scheduling**
-- Open, auditable Excel outputs (hourly, monthly, summary)
-
-## 📂 Repository Structure
-```
-📁 data/           → Input datasets (irradiance, load, techno-economic parameters)
-📁 src/            → MATLAB MILP formulation and drivers
-📁 results/        → Excel outputs for deterministic and CVaR runs
-📁 docs/           → IRR PDF and supplementary appendices
-README.md          → This file
-LICENSE            → License for reuse
-```
+---
 
 ## 🖥 Requirements
-- MATLAB R2023a+ with Optimization Toolbox
-- NASA POWER API access (optional, for data refresh)
+- MATLAB **R2023a** or later
+- Optimization Toolbox
+- NASA POWER API access *(optional)* for dataset updates
 
-## 🚀 Running the Model
-1. Place `.mat` irradiance and operational datasets in `data/`
-2. Adjust parameters in `unit` and `econ` structs
-3. Run:
-```matlab
-run_milp_milp_v2_lex.m
-```
-4. Outputs are stored in `results/` in Excel format.
+---
 
 ## 📄 License
 MIT License – see [LICENSE](LICENSE) file.
+
+---
 
 ## 📚 Citation
 If you use this code or data, please cite:
