@@ -3,6 +3,8 @@
 
 This repository contains the models, data, and documentation supporting the MSc Business Analytics Individual Research Report (IRR) on optimising a hybrid renewable–hydrogen system for Ma’aden's off-grid Al Jalamid phosphate complex.
 
+---
+
 ## 📜 Overview
 We develop a **two-pass lexicographic Mixed-Integer Linear Program (MILP)** to size and dispatch:
 - **Photovoltaic (PV)** field
@@ -12,19 +14,98 @@ We develop a **two-pass lexicographic Mixed-Integer Linear Program (MILP)** to s
 
 The system replaces diesel-based electricity and Heavy Fuel Oil (HFO) process heat with renewable electricity and green hydrogen.
 
-## 📊 Key Features
-- **Deterministic and CVaR (risk-aware) MILP** formulations
-- Hourly resolution over 1-year and 10-year NASA POWER irradiance records
-- Explicit coupling of electrolyser hydrogen output to avoided HFO use and carbon credits
-- Sensitivity analysis for **CO₂ price** and **production scheduling**
-- Open, auditable Excel outputs (hourly, monthly, summary)
+The optimisation includes both **deterministic** and **CVaR (Conditional Value-at-Risk) risk-aware** formulations, and all results are auditable through detailed Excel outputs.
 
-## 📂 Repository Structure
-```
-📁 data/           → Input datasets (irradiance, load, techno-economic parameters)
-📁 src/            → MATLAB MILP formulation and drivers
-📁 results/        → Excel outputs for deterministic and CVaR runs
-📁 docs/           → IRR PDF and supplementary appendices
+---
+
+## 📊 Key Features
+- **Deterministic and CVaR MILP** formulations implemented in MATLAB
+- Hourly resolution over single-year (2022) and 10-year NASA POWER irradiance datasets
+- Explicit coupling of electrolyser hydrogen output to avoided HFO use, avoided trucking, and monetised carbon credits
+- Sensitivity analysis for **CO₂ price**, **production scheduling**, and **reliability constraints**
+- Automatic Excel report generation with:
+  - Hourly dispatch
+  - Monthly totals
+  - Summary KPIs
+  - Cost breakdown
+  - Emissions accounting
+  - Assumptions table
+
+---
+
+## 📂 Repository Structure and File Descriptions
+
+### **📁 data/**
+Input datasets used by the MILP:
+- `irradiance_hourly.mat` – Hourly plane-of-array (GHI) irradiance for PV for 2022
+- `dni_hourly.mat` – Hourly direct normal irradiance (DNI) for CSP for 2022
+- `irradiance_hourly_2013-2022.mat` – 10-year hourly GHI dataset (2013–2022)
+- `dni_hourly_10Y.mat` – 10-year hourly DNI dataset (2013–2022)
+- `hourly_H2_demand_100.mat` – Hourly hydrogen demand profile (100% HFO displacement equivalent)
+- `diesel_hourly_energy.mat` / `.xlsx` – Hourly site diesel generation profile (site load proxy)
+- **Note:** Leap-day hours are removed to ensure each year has 8,760 hours.
+
+### **📁 src/**
+MATLAB source code for model execution:
+- `build_and_solve_milp_v2_lex_CVaR.m`  
+  Main MILP solver for PV + CSP + TES + BESS + PEM electrolyser, with 2-pass lexicographic optimisation:
+  1. **Pass 1:** Minimise unmet site load
+  2. **Pass 2:** Fix reliability and minimise net cost (CAPEX + OPEX + penalties − revenues/credits)
+- `build_and_solve_milp_siteonly_CVaR.m`  
+  CVaR-aware MILP variant optimising only for site electricity load (H₂ from surplus, post-hoc)
+- `run_milp_milp_v2_lex.m`  
+  Example driver script for single-year or multi-year deterministic runs
+- `run_milp_milp_v2_lex_CVaR.m`  
+  Example driver script for CVaR runs over multi-year scenarios
+- Helper functions for:
+  - Data alignment (irradiance, DNI, load, H₂ demand)
+  - Leap-day trimming
+  - Gap-filling (linear interpolation for ≤3h gaps)
+  - Output struct unpacking and Excel writing
+
+### **📁 results/**
+Example model outputs (Excel):
+- Hourly dispatch profiles
+- Monthly aggregates
+- Summary KPIs (CAPEX, OPEX, Net Cost, production, emissions)
+- Cost breakdown (by subsystem)
+- Emissions (CO₂, CH₄, N₂O avoided)
+- Assumptions (all `unit` and `econ` parameters used)
+
+### **📁 docs/**
+Project documentation:
+- Final MSc IRR PDF
+- Appendices with cost benchmarks, carbon pricing scenarios, and operational assumptions
+
+---
+
+## 🖥 Requirements
+- MATLAB **R2023a** or later
+- Optimization Toolbox
+- NASA POWER API access *(optional)* for dataset updates
+
+---
+
+## 🚀 Running the Model
+
+### 1. Prepare Input Data
+Place `.mat` or `.xlsx` files in the `data/` folder:
+- Irradiance and DNI datasets
+- Diesel site load profile
+- Hydrogen demand profile
+
+### 2. Adjust Parameters
+Edit `unit` and `econ` structs in the driver script to update techno-economic assumptions.
+
+### 3. Run the Optimisation
+```matlab
+% Deterministic example:
+run_milp_milp_v2_lex;
+
+% CVaR example (10-year scenarios):
+run_milp_milp_v2_lex_CVaR;
+
+### **Other files**
 README.md          → This file
 LICENSE            → License for reuse
 ```
