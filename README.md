@@ -47,16 +47,17 @@ Input datasets used by the MILP:
 
 ### **📁 src/**
 MATLAB source code for model execution:
-- `build_and_solve_milp_v2_lex_CVaR.m`  
-  Main MILP solver for PV + CSP + TES + BESS + PEM electrolyser, with 2-pass lexicographic optimisation:
+- `run_milp_milp_v2_lex.m`  
+  Main MILP solver for PV + CSP + TES + BESS + PEM electrolyser, deterministic with 2-pass lexicographic optimisation:
   1. **Pass 1:** Minimise unmet site load
   2. **Pass 2:** Fix reliability and minimise net cost (CAPEX + OPEX + penalties − revenues/credits)
-- `build_and_solve_milp_siteonly_CVaR.m`  
+ 
+  CVaR-aware MILP variant optimising for site electricity load and H₂ 
+- `build_and_solve_milp_v2_lex_CVaR.m`
+  
   CVaR-aware MILP variant optimising only for site electricity load (H₂ from surplus, post-hoc)
-- `run_milp_milp_v2_lex.m`  
-  Example driver script for single-year or multi-year deterministic runs
-- `run_milp_milp_v2_lex_CVaR.m`  
-  Example driver script for CVaR runs over multi-year scenarios
+- `build_and_solve_milp_siteonly_CVaR.m`
+
 - Helper functions for:
   - Data alignment (irradiance, DNI, load, H₂ demand)
   - Leap-day trimming
@@ -105,23 +106,12 @@ run_milp_milp_v2_lex;
 % CVaR example (10-year scenarios):
 run_milp_milp_v2_lex_CVaR;
 
+### 4. Outputs are stored in `results/` in Excel format.
+
 ### **Other files**
 README.md          → This file
 LICENSE            → License for reuse
 ```
-
-## 🖥 Requirements
-- MATLAB R2023a+ with Optimization Toolbox
-- NASA POWER API access (optional, for data refresh)
-
-## 🚀 Running the Model
-1. Place `.mat` irradiance and operational datasets in `data/`
-2. Adjust parameters in `unit` and `econ` structs
-3. Run:
-```matlab
-run_milp_milp_v2_lex.m
-```
-4. Outputs are stored in `results/` in Excel format.
 
 ## 📄 License
 MIT License – see [LICENSE](LICENSE) file.
