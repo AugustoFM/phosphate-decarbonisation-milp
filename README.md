@@ -1,7 +1,7 @@
 # Fully Decarbonising the Off-Grid Al Jalamid Phosphate Complex
 **MILP Formulation and Techno-Economics for PV–CSP–BESS–PEM Integration**
 
-This repository contains the models, data, and documentation supporting the MSc Business Analytics Individual Research Report (IRR) on optimising a hybrid renewable–hydrogen system for Ma’aden's off-grid Al Jalamid phosphate complex.
+This repository contains the models, data, and documentation supporting the MSc Business Analytics Individual Research Report (IRR) on optimising a hybrid renewable–hydrogen system for Ma’aden's off-grid Al Jalamid phosphate complex. The site uses diesel for electricity generation and uses heavy fuel oil HFO in the combustion chamber of the dryer. This project aims from partial to full decarbonization of site.
 
 ---
 
@@ -42,7 +42,7 @@ Input datasets used by the MILP:
 - `irradiance_hourly_2013-2022.mat` – 10-year hourly GHI dataset (2013–2022)
 - `dni_hourly_10Y.mat` – 10-year hourly DNI dataset (2013–2022)
 - `hourly_H2_demand_100.mat` – Hourly hydrogen demand profile (100% HFO displacement equivalent)
-- `diesel_hourly_energy.mat` / `.xlsx` – Hourly site diesel generation profile (site load proxy)
+- `diesel_hourly_energy.mat` / `.xlsx` – Hourly site diesel based electricity generation profile (site load proxy)
 - **Note:** Leap-day hours are removed to ensure each year has 8,760 hours.
 
 ### **📁 src/**
@@ -51,13 +51,13 @@ MATLAB source code for model execution:
   Main MILP solver for PV + CSP + TES + BESS + PEM electrolyser, deterministic with 2-pass lexicographic optimisation:
   1. **Pass 1:** Minimise unmet site load
   2. **Pass 2:** Fix reliability and minimise net cost (CAPEX + OPEX + penalties − revenues/credits)
- 
-  CVaR-aware MILP variant optimising for site electricity load and H₂ 
+    
 - `build_and_solve_milp_v2_lex_CVaR.m`
-  
-  CVaR-aware MILP variant optimising only for site electricity load (H₂ from surplus, post-hoc)
-- `build_and_solve_milp_siteonly_CVaR.m`
+  CVaR-aware MILP variant optimising for site electricity load and H₂
 
+- `build_and_solve_milp_siteonly_CVaR.m`
+  CVaR-aware MILP variant optimising only for site electricity load (H₂ from surplus, post-hoc)
+  
 - Helper functions for:
   - Data alignment (irradiance, DNI, load, H₂ demand)
   - Leap-day trimming
@@ -106,9 +106,9 @@ run_milp_milp_v2_lex;
 % CVaR example (10-year scenarios):
 run_milp_milp_v2_lex_CVaR;
 
-### 4. Outputs are stored in `results/` in Excel format.
+## 4. Outputs are stored in `results/` in Excel format.
 
-### **Other files**
+## **Other files**
 README.md          → This file
 LICENSE            → License for reuse
 ```
