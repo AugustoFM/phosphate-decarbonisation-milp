@@ -106,6 +106,7 @@ run_milp_milp_v2_lex;
 % CVaR example (10-year scenarios):
 run_milp_milp_v2_lex_CVaR;
 
+## 📜 Overview
 ## 4. Outputs are stored in `results/` in Excel format.
 
 ## **Other files**
