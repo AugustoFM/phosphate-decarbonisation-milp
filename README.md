@@ -4,6 +4,8 @@
 This repository contains the models, data, and documentation supporting the MSc Business Analytics Individual Research Report (IRR) on optimising a hybrid renewable–hydrogen system for Ma’aden's off-grid Al Jalamid phosphate complex.
 
 ## 📜 Overview
+![Hybrid PV–CSP–BESS–PEM System Flow](hybrid_pv_csp_bess_pem_flow.png)
+
 We develop a **two-pass lexicographic Mixed-Integer Linear Program (MILP)** to size and dispatch:
 - **Photovoltaic (PV)** field
 - **Concentrating Solar Power (CSP)** with molten-salt Thermal Energy Storage (TES)
